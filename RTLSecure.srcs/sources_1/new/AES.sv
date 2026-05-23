@@ -20,78 +20,77 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module AES #(parameter DATA_WIDTH=8)(   // single pixel.
-    input logic clk,
-    input logic rst,
-    input logic [DATA_WIDTH-1:0] in_data,
+module AES import aes_pkg::*; #(parameter DATA_WIDTH=128)(
+    input  logic                  clk,
+    input  logic                  rst,
+    input  logic [DATA_WIDTH-1:0] in_data,
+    input  logic                  in_data_valid,
+    input  logic [DATA_WIDTH-1:0] key,
     output logic [DATA_WIDTH-1:0] out_data,
-    output logic out_valid
-    );
-    localparam WORD_SIZE = 128; // Depth of the input buffer FIFO
-    enum state_t {IDLE, ACCUMULATE, ENCRYPT} state, next_state;
-    logic encryption_done; // Signal to indicate when encryption is complete
+    output logic                  out_data_valid
+);
 
-    // State Transition Logic
-    always_ff @(posedge clk or posedge rst) begin
-        if (rst) begin
-            state <= IDLE;
-        end else begin
-            state <= next_state;
+    // --- State Declarations ---
+    aes_state_t initial_state;
+
+    // Intermediate wires connecting the stages
+    aes_state_t s1_state, s2_state, s3_state, s4_state;
+    logic       s1_valid, s2_valid, s3_valid, s4_valid;
+
+    // --- Input Mapping ---
+    always_comb begin
+        for (int col = 0; col < 4; col++) begin
+            for (int row = 0; row < 4; row++) begin
+                initial_state[col][row] = in_data[((col * 4 + row) * 8) +: 8];
+            end
         end
     end
 
-    logic fifo_full, fifo_empty;
-    logic [DATA_WIDTH-1:0] fifo_r_data;
-    sync_fifo #(.DATA_WIDTH(DATA_WIDTH), .DEPTH(WORD_SIZE)) input_buffer (
-        .clk(clk),
-        .rst(rst),
-        .w_data(in_data),
-        .w_en(1), // Always write incoming data
-        .full(fifo_full),  
-        .r_en(state == ENCRYPT), // Read when in ENCRYPT state
-        .empty(fifo_empty),  
-        .r_data(fifo_r_data) // Connect to the first stage of AES pipeline
+    // --- Structural Pipeline ---
+
+    // Stage 1: SubBytes
+    aes_substitute_bytes u_subbytes (
+        .clk       (clk),
+        .rst       (rst),
+        .valid_in  (in_data_valid),
+        .state_in  (initial_state),
+        .valid_out (s1_valid),
+        .state_out (s1_state)
     );
-    
-    // Next State Logic
-    always_comb begin
-        case (state)
-            IDLE: begin
-                if (in_data_valid) begin
-                    next_state = ACCUMULATE;
-                end else begin
-                    next_state = IDLE;
-                end
-            end
-            ACCUMULATE: begin
-                if (fifo_full) begin
-                    next_state = ENCRYPT;
-                end else begin
-                    next_state = ACCUMULATE;
-                end
-            end
-            ENCRYPT: begin
-                if (encryption_done) begin
-                    next_state = IDLE;
-                end else begin
-                    next_state = ENCRYPT;
-                end
-            end
-            default: next_state = IDLE;
-        endcase
-    end
 
+    // Stage 2: ShiftRows
+    aes_shift_rows u_shiftrows (
+        .clk       (clk),
+        .rst       (rst),
+        .valid_in  (s1_valid),
+        .state_in  (s1_state),
+        .valid_out (s2_valid),
+        .state_out (s2_state)
+    );
 
-    // Pipeline registers for each stage
-    logic [DATA_WIDTH-1:0] sub_bytes_reg;
-    logic [DATA_WIDTH-1:0] shift_rows_reg;
-    logic [DATA_WIDTH-1:0] mix_columns_reg;
-    logic [DATA_WIDTH-1:0] add_round_key_reg;
-    // IDLE State: Wait for input data
-    // SUB_BYTES State: Apply S-box transformation to each byte
-    // SHIFT_ROWS State: Shift rows of the state array
-    // MIX_COLUMNS State: Mix columns of the state array
-    // ADD_ROUND_KEY State: Add round key to the state array
+    // // Stage 3: MixColumns
+    // aes_mix_columns u_mixcolumns (
+    //     .clk       (clk),
+    //     .rst       (rst),
+    //     .valid_in  (s2_valid),
+    //     .state_in  (s2_state),
+    //     .valid_out (s3_valid),
+    //     .state_out (s3_state)
+    // );
 
-    assign out_valid = (state == ENCRYPT) && encryption_done;
+    // // Stage 4: AddRoundKey
+    // aes_add_round_key u_addroundkey (
+    //     .clk       (clk),
+    //     .rst       (rst),
+    //     .valid_in  (s3_valid),
+    //     .state_in  (s3_state),
+    //     .key       (key),
+    //     .valid_out (s4_valid),
+    //     .state_out (s4_state)
+    // );
+
+    // --- Output Mapping ---
+    assign out_data       = s4_state;
+    assign out_data_valid = s4_valid;
+
 endmodule
