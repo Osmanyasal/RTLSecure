@@ -134,3 +134,10 @@ INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/AMDDesignTools/2025.2.1/Vivado/data/ip'.
 open_project: Time (s): cpu = 00:00:15 ; elapsed = 00:00:07 . Memory (MB): peak = 1676.086 ; gain = 256.820
 update_compile_order -fileset sources_1
+add_files -norecurse {C:/Users/osmya/Desktop/RTLVision/RTLVision/RTLVision.srcs/sources_1/new/sync_stack.sv C:/Users/osmya/Desktop/RTLVision/RTLVision/RTLVision.srcs/sources_1/new/sync_fifo.sv}
+update_compile_order -fileset sources_1
+import_files C:/Users/osmya/Desktop/RTLVision/RTLVision/RTLVision.srcs/sources_1/new/sync_fifo.sv
+import_files C:/Users/osmya/Desktop/RTLVision/RTLVision/RTLVision.srcs/sources_1/new/sync_stack.sv
+update_compile_order -fileset sources_1
+exit
+INFO: [Common 17-206] Exiting Vivado at Sat May 23 12:19:03 2026...
