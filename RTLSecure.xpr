@@ -4,7 +4,7 @@
 <!-- Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.                   -->
 <!-- Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.   -->
 
-<Project Product="Vivado" Version="7" Minor="71" Path="C:/Users/osmya/Desktop/RTLCryption/RTLCryption.xpr">
+<Project Product="Vivado" Version="7" Minor="71" Path="C:/Users/osmya/Desktop/RTLSecure/RTLSecure.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
     <Option Name="Id" Val="b3d0d51bbb964d26bc3145068df61b26"/>

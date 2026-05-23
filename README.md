@@ -1,4 +1,4 @@
-# RTLCryption
+# RTLSecure
 FPGA based encryption/decryption library
 
 FPGAs are fantastic platforms for cryptographic workloads. Their parallel architecture allows for massive throughput and energy optimization. Because of this flexibility, almost any encryption algorithm can be synthesized onto an FPGA using SystemVerilog or VHDL.
