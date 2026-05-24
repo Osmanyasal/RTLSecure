@@ -12,6 +12,7 @@ Time Resolution for simulation is 1ps
 Compiling package xil_defaultlib.aes_pkg
 Compiling module xil_defaultlib.sbox_8bit
 Compiling module xil_defaultlib.aes_substitute_bytes_default
+Compiling module xil_defaultlib.aes_shift_rows
 Compiling module xil_defaultlib.AES
 Compiling module xil_defaultlib.tb_AES
 Compiling module xil_defaultlib.glbl

@@ -39,27 +39,28 @@ always_ff @(posedge clk) begin
         if (valid_in) begin
             // Row 0: No shift
             state_out[0][0] <= state_in[0][0];
-            state_out[1][0] <= state_in[1][0];
-            state_out[2][0] <= state_in[2][0];
-            state_out[3][0] <= state_in[3][0];
+            state_out[0][1] <= state_in[0][1];
+            state_out[0][2] <= state_in[0][2];
+            state_out[0][3] <= state_in[0][3];
 
             // Row 1: Shift left by 1 column
-            state_out[0][1] <= state_in[1][1];
-            state_out[1][1] <= state_in[2][1];
-            state_out[2][1] <= state_in[3][1];
-            state_out[3][1] <= state_in[0][1];
+            state_out[1][0] <= state_in[1][1];
+            state_out[1][1] <= state_in[1][2];
+            state_out[1][2] <= state_in[1][3];
+            state_out[1][3] <= state_in[1][0];
 
             // Row 2: Shift left by 2 columns
-            state_out[0][2] <= state_in[2][2];
-            state_out[1][2] <= state_in[3][2];
-            state_out[2][2] <= state_in[0][2];
-            state_out[3][2] <= state_in[1][2];
+            state_out[2][0] <= state_in[2][2];
+            state_out[2][1] <= state_in[2][3];
+            state_out[2][2] <= state_in[2][0];
+            state_out[2][3] <= state_in[2][1];
 
             // Row 3: Shift left by 3 columns (or right by 1)
-            state_out[0][3] <= state_in[3][3];
-            state_out[1][3] <= state_in[0][3];
-            state_out[2][3] <= state_in[1][3];
-            state_out[3][3] <= state_in[2][3];
+            state_out[3][0] <= state_in[3][3];
+            state_out[3][1] <= state_in[3][0];
+            state_out[3][2] <= state_in[3][1];
+            state_out[3][3] <= state_in[3][2];
         end
+    end
     end
 endmodule

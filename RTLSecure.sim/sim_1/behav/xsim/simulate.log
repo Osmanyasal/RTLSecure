@@ -1,2 +1,14 @@
 Time resolution is 1 ps
-Stopped at time : 40 ns : File "C:/Users/osmya/Desktop/RTLSecure/RTLSecure.srcs/sim_1/new/tb_AES.sv" Line 91
+Stopped at time : 35 ns : File "C:/Users/osmya/Desktop/RTLSecure/RTLSecure.srcs/sim_1/new/tb_AES.sv" Line 88
+Stopped at time : 36 ns : File "C:/Users/osmya/Desktop/RTLSecure/RTLSecure.srcs/sim_1/new/tb_AES.sv" Line 89
+Stopped at time : 45 ns : File "C:/Users/osmya/Desktop/RTLSecure/RTLSecure.srcs/sim_1/new/tb_AES.sv" Line 90
+Stopped at time : 46 ns : File "C:/Users/osmya/Desktop/RTLSecure/RTLSecure.srcs/sim_1/new/tb_AES.sv" Line 91
+Time: 55000 | VALID OUTPUT | Data: 63636363636363636363636363636363
+Time: 65000 | VALID OUTPUT | Data: 1a42c223045dc4be3ac7c746e19ac518
+Time: 75000 | VALID OUTPUT | Data: 1a42c223045dc4be3ac7c746e19ac518
+Time: 85000 | VALID OUTPUT | Data: 1a42c223045dc4be3ac7c746e19ac518
+Time: 95000 | VALID OUTPUT | Data: 1a42c223045dc4be3ac7c746e19ac518
+Time: 105000 | VALID OUTPUT | Data: 1a42c223045dc4be3ac7c746e19ac518
+Time: 115000 | VALID OUTPUT | Data: 8293c36333f51bfceac4eeac4bc12816
+Time: 165000 | Simulation Complete.
+$finish called at time : 165 ns : File "C:/Users/osmya/Desktop/RTLSecure/RTLSecure.srcs/sim_1/new/tb_AES.sv" Line 119

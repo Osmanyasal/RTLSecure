@@ -74,32 +74,41 @@ module tb_AES import aes_pkg::*; ();
 
         // 2. Apply Reset
         #(CLK_PERIOD * 2);
-        @(negedge clk);
+        @(posedge clk);
         rst = 0;
         #(CLK_PERIOD);
 
         // 3. Test Vector 1 (Standard NIST FIPS 197 example values)
         // We apply inputs on the falling edge to ensure setup/hold times are met 
         // for the posedge clock in the DUT.
-        @(negedge clk);
+        @(posedge clk);
         in_data       = 128'h3243f6a8_885a308d_313198a2_e0370734;
         key           = 128'h2b7e1516_28aed2a6_abf71588_09cf4f3c;
         in_data_valid = 1;
-
+        #1; // wait for signals to propagate
+        
+        @(posedge clk);
+        #1;
+        @(posedge clk);
+        #1;
+        @(posedge clk);
+        #1;
+        @(posedge clk);
+        #1;
         // 4. Test Vector 2 (Push immediately to test pipeline density)
-        @(negedge clk);
+        @(posedge clk);
         in_data       = 128'h00112233_44556677_8899aabb_ccddeeff;
         key           = 128'h00010203_04050607_08090a0b_0c0d0e0f;
         in_data_valid = 1;
-
+        
         // 5. Test Vector 3 (Push another one)
-        @(negedge clk);
+        @(posedge clk);
         in_data       = 128'hffffffff_ffffffff_ffffffff_ffffffff;
         key           = 128'h12345678_12345678_12345678_12345678;
         in_data_valid = 1;
 
         // 6. Stop sending data and wait for pipeline to flush
-        @(negedge clk);
+        @(posedge clk);
         in_data       = '0;
         in_data_valid = 0;
 

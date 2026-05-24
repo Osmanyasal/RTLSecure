@@ -52,7 +52,6 @@ module aes_substitute_bytes import aes_pkg::*; (
             valid_out <= valid_in;
             
             if (valid_in) begin
-                // A single assignment cleanly copies all 16 bytes simultaneously
                 state_out <= sbox_out;
             end
         end
