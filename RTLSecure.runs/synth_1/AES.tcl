@@ -73,6 +73,8 @@ OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib -sv {
   C:/Users/osmya/Desktop/RTLSecure/RTLSecure.srcs/sources_1/new/aes_pkg.sv
+  C:/Users/osmya/Desktop/RTLSecure/RTLSecure.srcs/sources_1/new/aes_add_round_key.sv
+  C:/Users/osmya/Desktop/RTLSecure/RTLSecure.srcs/sources_1/new/aes_mix_columns.sv
   C:/Users/osmya/Desktop/RTLSecure/RTLSecure.srcs/sources_1/new/aes_shift_rows.sv
   C:/Users/osmya/Desktop/RTLSecure/RTLSecure.srcs/sources_1/new/aes_substitute_bytes.sv
   C:/Users/osmya/Desktop/RTLSecure/RTLSecure.srcs/sources_1/new/sbox_8bit.sv
@@ -91,6 +93,8 @@ read_xdc C:/Users/osmya/Desktop/RTLSecure/RTLSecure.srcs/constrs_1/new/constrain
 set_property used_in_implementation false [get_files C:/Users/osmya/Desktop/RTLSecure/RTLSecure.srcs/constrs_1/new/constraints.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
+
+read_checkpoint -auto_incremental -incremental C:/Users/osmya/Desktop/RTLSecure/RTLSecure.srcs/utils_1/imports/synth_1/AES.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }
