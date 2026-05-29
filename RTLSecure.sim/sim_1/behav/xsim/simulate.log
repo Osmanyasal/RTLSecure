@@ -10,4 +10,6 @@ Errors             : 0
 STATUS             : PASS
 ========================================
 
-$finish called at time : 10145 ns : File "C:/Users/osmya/Desktop/RTLSecure/RTLSecure.srcs/sim_1/new/tb_AES_stream.sv" Line 155
+$finish called at time : 10865 ns : File "C:/Users/osmya/Desktop/RTLSecure/RTLSecure.srcs/sim_1/new/tb_AES_stream.sv" Line 155
+FATAL: Simulation timed out. Pipeline may be stalled.
+$finish called at time : 11 us : File "C:/Users/osmya/Desktop/RTLSecure/RTLSecure.srcs/sim_1/new/tb_AES_stream.sv" Line 165

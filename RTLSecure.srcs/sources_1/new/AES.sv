@@ -9,16 +9,16 @@
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
-// Description: AES (Advanced Encryption Standard) Implementation
+// Description: AES-128 (Advanced Encryption Standard) 10-Round Implementation
 // 
-// Dependencies: 
+// Dependencies: aes_pkg, aes_substitute_bytes, aes_shift_rows, 
+//               aes_mix_columns, aes_add_round_key, aes_key_expansion
 // 
 // Revision:
-// Revision 0.01 - File Created
+// Revision 0.02 - Expanded to full 10-round unrolled pipeline
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-
 
 module AES import aes_pkg::*; #(parameter DATA_WIDTH=128)(
     input  logic                  clk,
@@ -31,67 +31,136 @@ module AES import aes_pkg::*; #(parameter DATA_WIDTH=128)(
 );
 
     // --- State Declarations ---
-    aes_state_t data_state;
-    aes_state_t key_state;
+    aes_state_t init_state;
+    
+    // AES-128 requires 11 keys (1 original + 10 expanded)
+    aes_state_t round_keys [0:10]; 
 
-    // Intermediate wires connecting the stages
-    aes_state_t s1_state, s2_state, s3_state, s4_state;
-    logic       s1_valid, s2_valid, s3_valid, s4_valid;
+    // Pipeline state and valid signals for inter-stage routing
+    aes_state_t round_state [0:10];
+    logic       round_valid [0:10];
 
-    // --- Input Mapping ---
+    // --- Input Mapping (Vector to 4x4 Array) ---
     always_comb begin
         for (int col = 0; col < 4; col++) begin
             for (int row = 0; row < 4; row++) begin
-                data_state[col][row] = in_data[((col * 4 + row) * 8) +: 8];
-                key_state[col][row] = key[((col * 4 + row) * 8) +: 8];
+                init_state[col][row] = in_data[((col * 4 + row) * 8) +: 8];
             end
         end
     end
 
+    // --- Key Expansion ---
+    // Instantiating a Key Expansion module to generate the 11 round keys.
+    // Ensure this module exists in your project.
+    aes_key_expansion u_key_expansion (
+        .clk        (clk),
+        .rst        (rst),
+        .key_in     (key),
+        .round_keys (round_keys)
+    );
+
     // --- Structural Pipeline ---
 
-    // Stage 1: SubBytes
-    aes_substitute_bytes u_subbytes (
+    // Stage 0: Initial AddRoundKey
+    aes_add_round_key u_addroundkey_init (
         .clk       (clk),
         .rst       (rst),
         .valid_in  (in_data_valid),
-        .state_in  (data_state),
-        .valid_out (s1_valid),
-        .state_out (s1_state)
+        .state_in  (init_state),
+        .key       (round_keys[0]),
+        .valid_out (round_valid[0]),
+        .state_out (round_state[0])
     );
 
-    // Stage 2: ShiftRows
-    aes_shift_rows u_shiftrows (
+    // Stages 1 to 9: Standard AES Rounds
+    genvar i;
+    generate
+        for (i = 1; i < 10; i++) begin : gen_aes_rounds
+            // Local wires for intra-round connections
+            aes_state_t sub_state, shift_state, mix_state;
+            logic       sub_valid, shift_valid, mix_valid;
+
+            aes_substitute_bytes u_subbytes (
+                .clk       (clk),
+                .rst       (rst),
+                .valid_in  (round_valid[i-1]),
+                .state_in  (round_state[i-1]),
+                .valid_out (sub_valid),
+                .state_out (sub_state)
+            );
+
+            aes_shift_rows u_shiftrows (
+                .clk       (clk),
+                .rst       (rst),
+                .valid_in  (sub_valid),
+                .state_in  (sub_state),
+                .valid_out (shift_valid),
+                .state_out (shift_state)
+            );
+
+            aes_mix_columns u_mixcolumns (
+                .clk       (clk),
+                .rst       (rst),
+                .valid_in  (shift_valid),
+                .state_in  (shift_state),
+                .valid_out (mix_valid),
+                .state_out (mix_state)
+            );
+
+            aes_add_round_key u_addroundkey (
+                .clk       (clk),
+                .rst       (rst),
+                .valid_in  (mix_valid),
+                .state_in  (mix_state),
+                .key       (round_keys[i]),
+                .valid_out (round_valid[i]),
+                .state_out (round_state[i])
+            );
+        end
+    endgenerate
+
+    // Stage 10: Final AES Round (Omits MixColumns)
+    aes_state_t r10_sub_state, r10_shift_state;
+    logic       r10_sub_valid, r10_shift_valid;
+
+    aes_substitute_bytes u_subbytes_r10 (
         .clk       (clk),
         .rst       (rst),
-        .valid_in  (s1_valid),
-        .state_in  (s1_state),
-        .valid_out (s2_valid),
-        .state_out (s2_state)
+        .valid_in  (round_valid[9]),
+        .state_in  (round_state[9]),
+        .valid_out (r10_sub_valid),
+        .state_out (r10_sub_state)
     );
 
-    // Stage 3: MixColumns
-    aes_mix_columns u_mixcolumns (
+    aes_shift_rows u_shiftrows_r10 (
         .clk       (clk),
         .rst       (rst),
-        .valid_in  (s2_valid),
-        .state_in  (s2_state),
-        .valid_out (s3_valid),
-        .state_out (s3_state)
+        .valid_in  (r10_sub_valid),
+        .state_in  (r10_sub_state),
+        .valid_out (r10_shift_valid),
+        .state_out (r10_shift_state)
     );
 
-    // Stage 4: AddRoundKey
-    aes_add_round_key u_addroundkey (
+    // Notice we skip MixColumns here and pipe ShiftRows straight to AddRoundKey
+    aes_add_round_key u_addroundkey_r10 (
         .clk       (clk),
         .rst       (rst),
-        .valid_in  (s3_valid),
-        .state_in  (s3_state),
-        .key       (key_state),
-        .valid_out (s4_valid),
-        .state_out (s4_state)
+        .valid_in  (r10_shift_valid),
+        .state_in  (r10_shift_state),
+        .key       (round_keys[10]),
+        .valid_out (round_valid[10]),
+        .state_out (round_state[10])
     );
-    // --- Output Mapping ---
-    assign out_data       = s4_state;
-    assign out_data_valid = s4_valid;
+
+    // --- Output Mapping (4x4 Array to Vector) ---
+    always_comb begin
+        for (int col = 0; col < 4; col++) begin
+            for (int row = 0; row < 4; row++) begin
+                out_data[((col * 4 + row) * 8) +: 8] = round_state[10][col][row];
+            end
+        end
+    end
+
+    assign out_data_valid = round_valid[10];
 
 endmodule
