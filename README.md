@@ -16,6 +16,8 @@ These algorithms use the same key for encryption and decryption and are the heav
 | Algorithm | Description | Status |
 |-----------|-------------|--------|
 | **AES** (Advanced Encryption Standard) | The standard for modern cryptography. Implementing AES in hardware allows for deep pipelining and loop unrolling. FPGAs can handle multiple parallel AES-GCM streams in the tens of Gbps, vastly outperforming standard CPUs. | - [ ] To Do |
+| **DES** (Data Encryption Standard) | A classic 64-bit block cipher using a 56-bit key and 16 Feistel rounds. While no longer considered secure for modern use, its simple structure makes it an excellent reference implementation on FPGA fabric. | - [ ] To Do |
+| **Feistel Cipher** | The foundational network structure underlying DES and many other block ciphers. A generic Feistel core in RTL provides a reusable, parameterisable building block where the round function can be swapped in or out without restructuring the pipeline. | - [ ] To Do |
 | **ChaCha20** | A high-speed stream cipher. Because it relies entirely on simple ARX (Addition-Rotation-XOR) operations, it routes efficiently on FPGA fabric without needing complex memory blocks. | - [ ] To Do |
 | **Lightweight Ciphers** (e.g., ASCON, PRESENT, Simon) | Designed for resource-constrained environments. These have minimal logic footprints, making them easy to drop into a larger block design as an accelerator without eating up all available LUTs. | - [ ] To Do |
 
