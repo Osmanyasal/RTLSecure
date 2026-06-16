@@ -1,27 +1,9 @@
 Vivado Simulator v2025.2.1
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
-Running: C:/AMDDesignTools/2025.2.1/Vivado/bin/unwrapped/win64.o/xelab.exe --incr --debug typical --relax --mt 2 -L xil_defaultlib -L uvm -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_AES_stream_behav xil_defaultlib.tb_AES_stream xil_defaultlib.glbl -log elaborate.log 
+Running: C:/AMDDesignTools/2025.2.1/Vivado/bin/unwrapped/win64.o/xelab.exe --incr --debug typical --relax --mt 2 -L xil_defaultlib -L uvm -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_AES_behav xil_defaultlib.tb_AES xil_defaultlib.glbl -log elaborate.log 
 Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
 Completed static elaboration
-Starting simulation data flow analysis
-Completed simulation data flow analysis
-Time Resolution for simulation is 1ps
-Compiling package xil_defaultlib.aes_pkg
-Compiling module xil_defaultlib.aes_key_expansion
-Compiling module xil_defaultlib.aes_add_round_key
-Compiling module xil_defaultlib.sbox_8bit
-Compiling module xil_defaultlib.aes_substitute_bytes_default
-Compiling module xil_defaultlib.aes_shift_rows
-Compiling module xil_defaultlib.aes_mix_columns
-Compiling module xil_defaultlib.AES_default
-Compiling module xil_defaultlib.aes_inv_shift_rows
-Compiling module xil_defaultlib.sbox_inv_8bit
-Compiling module xil_defaultlib.aes_inv_substitute_bytes_default
-Compiling module xil_defaultlib.aes_inv_mix_columns
-Compiling module xil_defaultlib.AES_Decrypt_default
-Compiling module xil_defaultlib.tb_AES_stream
-Compiling module xil_defaultlib.glbl
-Built simulation snapshot tb_AES_stream_behav
+INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
