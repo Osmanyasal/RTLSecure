@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module aes_key_expansion #(
+module key_expansion #(
     parameter DATA_WIDTH = 128,
     parameter NUM_ROUNDS = 10
 )(

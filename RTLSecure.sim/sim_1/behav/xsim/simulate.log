@@ -1,3 +1,8 @@
 Time resolution is 1 ps
 ----------------------------------------
-Stopped at time : 835 ns : File "C:/Users/osmya/Desktop/RTLSecure/RTLSecure.srcs/sim_1/new/tb_AES.sv" Line 101
+Expected Output: 3243f6a8885a308d313198a2e0370734
+Actual Output  : 3243f6a8885a308d313198a2e0370734
+STATUS: Decryption SUCCESS
+----------------------------------------
+$finish called at time : 83750 ps : File "/home/rt7/Desktop/RTLSecure/RTLSecure.srcs/sim_1/new/tb_Feistel.sv" Line 108
+INFO: xsimkernel Simulation Memory Usage: 281296 KB (Peak: 338568 KB), Simulation CPU Usage: 640 ms

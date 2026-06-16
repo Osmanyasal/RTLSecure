@@ -52,7 +52,7 @@ module AES import aes_pkg::*; #(parameter DATA_WIDTH=128)(
     // --- Key Expansion ---
     // Instantiating a Key Expansion module to generate the 11 round keys.
     // Ensure this module exists in your project.
-    aes_key_expansion u_key_expansion (
+    key_expansion u_key_expansion (
         .clk        (clk),
         .rst        (rst),
         .key_in     (key),

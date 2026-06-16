@@ -52,7 +52,7 @@ module AES_Decrypt import aes_pkg::*; #(parameter DATA_WIDTH=128)(
     // --- Key Expansion ---
     // Generates keys 0 through 10. For decryption, we will apply these 
     // in reverse order (10 down to 0) in the pipeline below.
-    aes_key_expansion u_key_expansion (
+    key_expansion u_key_expansion (
         .clk        (clk),
         .rst        (rst),
         .key_in     (key),
