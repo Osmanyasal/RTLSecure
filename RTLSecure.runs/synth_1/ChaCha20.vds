@@ -1,16 +1,26 @@
-
-*** Running vivado
-    with args -log ChaCha20.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source ChaCha20.tcl
-
-
-****** Vivado v2025.2 (64-bit)
-  **** SW Build 6299465 on Fri Nov 14 12:34:56 MST 2025
-  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
-  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
-  **** Start of session at: Wed Jul  8 14:10:46 2026
-    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
-    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
-
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 12:34:56 MST 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Wed Jul  8 14:10:46 2026
+# Process ID         : 117418
+# Current directory  : /home/rt7/Desktop/RTLSecure/RTLSecure.runs/synth_1
+# Command line       : vivado -log ChaCha20.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source ChaCha20.tcl
+# Log file           : /home/rt7/Desktop/RTLSecure/RTLSecure.runs/synth_1/ChaCha20.vds
+# Journal file       : /home/rt7/Desktop/RTLSecure/RTLSecure.runs/synth_1/vivado.jou
+# Running On         : rt7-desktop1
+# Platform           : Ubuntu
+# Operating System   : Ubuntu 24.04.3 LTS
+# Processor Detail   : AMD Ryzen 9 7950X 16-Core Processor
+# CPU Frequency      : 5282.776 MHz
+# CPU Physical cores : 16
+# CPU Logical cores  : 32
+# Host memory        : 66418 MB
+# Swap memory        : 8589 MB
+# Total Virtual      : 75007 MB
+# Available Virtual  : 63966 MB
+#-----------------------------------------------------------
 source ChaCha20.tcl -notrace
 Command: read_checkpoint -auto_incremental -incremental /home/rt7/Desktop/RTLSecure/RTLSecure.srcs/utils_1/imports/synth_1/AES.dcp
 INFO: [Vivado 12-5825] Read reference checkpoint from /home/rt7/Desktop/RTLSecure/RTLSecure.srcs/utils_1/imports/synth_1/AES.dcp for incremental synthesis
