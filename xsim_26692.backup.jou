@@ -1,14 +1,14 @@
 #-----------------------------------------------------------
-# Vivado v2025.2.1 (64-bit)
+# xsim v2025.2.1 (64-bit)
 # SW Build 6403652 on Thu Mar 19 19:48:24 GMT 2026
 # IP Build 6403511 on Thu Mar 19 12:41:45 MDT 2026
 # SharedData Build 6403650 on Thu Mar 19 14:02:13 MDT 2026
-# Start of session at: Tue Jul  7 23:45:26 2026
-# Process ID         : 17936
+# Start of session at: Fri Jul 24 16:56:15 2026
+# Process ID         : 26692
 # Current directory  : C:/Users/osmya/Desktop/RTLSecure
-# Command line       : vivado.exe -gui_launcher_event rodinguilauncherevent22260 C:\Users\osmya\Desktop\RTLSecure\RTLSecure.xpr
-# Log file           : C:/Users/osmya/Desktop/RTLSecure/vivado.log
-# Journal file       : C:/Users/osmya/Desktop/RTLSecure\vivado.jou
+# Command line       : xsim.exe -mode tcl -source {xsim.dir/tb_AES_stream_snapshot/xsim_script.tcl}
+# Log file           : C:/Users/osmya/Desktop/RTLSecure/xsim.log
+# Journal file       : C:/Users/osmya/Desktop/RTLSecure\xsim.jou
 # Running On         : rt7-laptop-duo
 # Platform           : Windows Server 2016 or Windows 10
 # Operating System   : 26200
@@ -19,8 +19,7 @@
 # Host memory        : 33685 MB
 # Swap memory        : 4831 MB
 # Total Virtual      : 38517 MB
-# Available Virtual  : 9741 MB
+# Available Virtual  : 15364 MB
 #-----------------------------------------------------------
-start_gui
-open_project C:/Users/osmya/Desktop/RTLSecure/RTLSecure.xpr
-update_compile_order -fileset sources_1
+source xsim.dir/tb_AES_stream_snapshot/xsim_script.tcl
+run -all

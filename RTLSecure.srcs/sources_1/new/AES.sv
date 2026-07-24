@@ -32,7 +32,7 @@ module AES import aes_pkg::*; #(parameter DATA_WIDTH=128)(
 
     // --- State Declarations ---
     aes_state_t init_state;
-    
+
     // AES-128 requires 11 keys (1 original + 10 expanded)
     aes_state_t round_keys [0:10]; 
 
@@ -44,7 +44,7 @@ module AES import aes_pkg::*; #(parameter DATA_WIDTH=128)(
     always_comb begin
         for (int col = 0; col < 4; col++) begin
             for (int row = 0; row < 4; row++) begin
-                init_state[col][row] = in_data[((col * 4 + row) * 8) +: 8];
+                init_state[col][row] = in_data[127 - ((col * 4 + row) * 8) -: 8];
             end
         end
     end
@@ -156,7 +156,7 @@ module AES import aes_pkg::*; #(parameter DATA_WIDTH=128)(
     always_comb begin
         for (int col = 0; col < 4; col++) begin
             for (int row = 0; row < 4; row++) begin
-                out_data[((col * 4 + row) * 8) +: 8] = round_state[10][col][row];
+                out_data[127 - ((col * 4 + row) * 8) -: 8] = round_state[10][col][row];
             end
         end
     end

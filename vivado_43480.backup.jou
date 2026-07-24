@@ -1,0 +1,42 @@
+#-----------------------------------------------------------
+# Vivado v2025.2.1 (64-bit)
+# SW Build 6403652 on Thu Mar 19 19:48:24 GMT 2026
+# IP Build 6403511 on Thu Mar 19 12:41:45 MDT 2026
+# SharedData Build 6403650 on Thu Mar 19 14:02:13 MDT 2026
+# Start of session at: Thu Jun  4 18:19:02 2026
+# Process ID         : 43480
+# Current directory  : C:/Users/osmya/Desktop/RTLSecure
+# Command line       : vivado.exe -gui_launcher_event rodinguilauncherevent4016 C:\Users\osmya\Desktop\RTLSecure\RTLSecure.xpr
+# Log file           : C:/Users/osmya/Desktop/RTLSecure/vivado.log
+# Journal file       : C:/Users/osmya/Desktop/RTLSecure\vivado.jou
+# Running On         : rt7-laptop-duo
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 26200
+# Processor Detail   : Intel(R) Core(TM) Ultra 7 255H
+# CPU Frequency      : 3686 MHz
+# CPU Physical cores : 16
+# CPU Logical cores  : 16
+# Host memory        : 33685 MB
+# Swap memory        : 4209 MB
+# Total Virtual      : 37895 MB
+# Available Virtual  : 8358 MB
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/osmya/Desktop/RTLSecure/RTLSecure.xpr
+update_compile_order -fileset sources_1
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top tb_AES [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sim_1
+launch_simulation
+source tb_AES.tcl
+current_wave_config {Untitled 1}
+add_wave {{/tb_AES/dut/u_key_expansion/round_keys}} 
+relaunch_sim
+current_wave_config {Untitled 1}
+add_wave {{/tb_AES/dut/init_state}} 
+relaunch_sim
+close_sim
