@@ -92,14 +92,25 @@ module tb_AES import aes_pkg::*; ();
         @(posedge clk);
         in_data_valid <= 1'b0; 
 
-        // Wait dynamically for the pipeline to finish
-        // SystemVerilog's wait() will block until the condition is true
+        // Wait for encryption pipeline output
+        wait(aes_out_data_valid == 1'b1);
+        $display("----------------------------------------");
+        $display("NIST Encryption Standard Check:");
+        $display("Expected Ciphertext: 3925841d02dc09fbdc118597196a0b32");
+        $display("Actual Ciphertext  : %h", aes_out_data);
+        if (aes_out_data == 128'h3925841d_02dc09fb_dc118597_196a0b32) begin
+            $display("STATUS: Encryption NIST Check SUCCESS");
+        end else begin
+            $display("STATUS: Encryption NIST Check FAILED");
+        end
+
+        // Wait dynamically for the decryption pipeline to finish
         wait(aes_inv_out_data_valid == 1'b1);
         
-        // The data is valid RIGHT NOW. We can sample it immediately.
         $display("----------------------------------------");
-        $display("Expected Output: %h", 128'h3243f6a8_885a308d_313198a2_e0370734);
-        $display("Actual Output  : %h", aes_inv_out_data);
+        $display("Decryption Check:");
+        $display("Expected Plaintext : 3243f6a8885a308d313198a2e0370734");
+        $display("Actual Plaintext   : %h", aes_inv_out_data);
         
         if (aes_inv_out_data == 128'h3243f6a8_885a308d_313198a2_e0370734) begin
             $display("STATUS: Decryption SUCCESS");

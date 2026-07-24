@@ -1,0 +1,1 @@
+-debug "typical" "tb_AES" -s "tb_AES_snapshot" 
